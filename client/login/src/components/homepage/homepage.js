@@ -17,6 +17,7 @@ export default Homepage*/
 import React, {useState, useEffect} from 'react';
 import FileUploadScreen from '../uploader/screens/FileUploadScreen';
 import {getMultipleFiles} from '../uploader/data/api';
+import SearchBar from '../SearchBar/SearchBar';
 import "./homepage.css"
 
 
@@ -38,8 +39,11 @@ const Homepage = ({setLoginUser}) => {
   return (
     <div>
         <div className="Homepage">
-          <h3 className="text-danger font-weight-bolder border-bottom text-center">File-Manager</h3>
-              <div className="button " onClick={() => setLoginUser({})} >Logout</div>  
+        <div className="button " className="btn btn danger" onClick={() => setLoginUser({})} >Logout</div>
+          <h3 className="text-danger font-weight-bolder border-bottom text-center">File-Manager</h3>  
+          <div className="App">
+      <SearchBar placeholder="Search a file" />
+    </div>
           <FileUploadScreen  getMultiple={() => getMultipleFilesList()}/>
        </div> 
        <div className="container-fluid mt-5">

@@ -1,3 +1,8 @@
+.container{
+    margin-top:auto;
+    margin-bottom:auto;
+}
+
 .login {
     width: 400px;
     background: #fff;

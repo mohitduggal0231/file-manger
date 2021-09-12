@@ -36,6 +36,16 @@ const User = new mongoose.model("User", userSchema)
 
 app.use('/api', fileRoutes.routes);
 
+app.get('/users', async (req,res,next) => {
+    const searchedField= req.query.name;
+    await User.find({name:{$regex: searchedField,$options: '$i'}})
+    .then(data=>{
+        res.send(data);
+    })
+});
+
+
+
 
 app.post("/login", (req, res)=> {
     const { email, password} = req.body
@@ -72,6 +82,8 @@ app.post("/register", (req, res)=> {
             })
         }
     })
+
+   
     
 }) 
 

@@ -10,3 +10,4 @@ module.exports = () => {
     }).then(() => console.log('Connected to Mongodb......'));
 
 }
+
