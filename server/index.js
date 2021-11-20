@@ -5,6 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const fileRoutes = require('./routes/file-upload-routes');
 const mongoose = require('mongoose');
+const multiplefile = require('./models/multiplefile');
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -36,6 +37,7 @@ const User = new mongoose.model("User", userSchema)
 
 app.use('/api', fileRoutes.routes);
 
+
 app.get('/users', async (req,res,next) => {
     const searchedField= req.query.name;
     await User.find({name:{$regex: searchedField,$options: '$i'}})
@@ -43,10 +45,15 @@ app.get('/users', async (req,res,next) => {
         res.send(data);
     })
 });
-
-
-
-
+app.post('/searchName', async (req,res,next) => {
+    const Name= req.body.ID;
+    console.log(Name);
+    await multiplefile.find({title:{$regex: Name,$options: '$i'}})
+    .then(data=>{
+        console.log(data);
+        res.send(data);
+    })
+});
 app.post("/login", (req, res)=> {
     const { email, password} = req.body
     User.findOne({ email: email}, (err, user) => {
@@ -61,6 +68,20 @@ app.post("/login", (req, res)=> {
         }
     })
 }) 
+/*app.get('/searchName',function(req,res){
+    const Name= req.body.ID;
+    multiplefile.find({title:{$regex: Name,$options: '$i'}},function(err,res1){
+      if(err){
+        console.log("Error in fetching list");
+        return;
+      }
+      return res.render('home',{
+        response:res1
+      });
+      return console.log(res1);
+    })
+  });*/
+
 
 app.post("/register", (req, res)=> {
     const { name, email, password} = req.body

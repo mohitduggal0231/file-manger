@@ -1,61 +1,39 @@
 import React, { useState } from "react";
 import "./SearchBar.css";
+import axios from 'axios';
 import SearchIcon from "@material-ui/icons/Search";
 import CloseIcon from "@material-ui/icons/Close";
 
-function SearchBar({ placeholder, data }) {
-  const [filteredData, setFilteredData] = useState([]);
-  const [wordEntered, setWordEntered] = useState("");
+const SearchBar = ({placeholder,handleChange}) =>{
+  
 
-  const handleFilter = (event) => {
-    const searchWord = event.target.value;
-    setWordEntered(searchWord);
-    const newFilter = data.filter((value) => {
-      return value.title.toLowerCase().includes(searchWord.toLowerCase());
-    });
+  /*function handleChange(event){
+    axios.post('http://localhost:8080/searchName',{ID : event.target.value})
+    .then(function (response) {
+      const var1=response;
+      setSrchData(var1);
+      console.log("hi",srchData);
+    })
+    .catch(function (error) {
+      console.log(error);
+    }); 
 
-    if (searchWord === "") {
-      setFilteredData([]);
-    } else {
-      setFilteredData(newFilter);
-    }
-  };
+};*/
 
-  const clearInput = () => {
-    setFilteredData([]);
-    setWordEntered("");
-  };
+  
+   
 
-  return (
-    <div className="search">
-      <div className="searchInputs">
-        <input
-          type="text"
-          placeholder={placeholder}
-          value={wordEntered}
-          onChange={handleFilter}
-        />
-        <div className="searchIcon">
-          {filteredData.length === 0 ? (
-            <SearchIcon />
-          ) : (
-            <CloseIcon id="clearBtn" onClick={clearInput} />
-          )}
-        </div>
-      </div>
-      {filteredData.length != 0 && (
-        <div className="dataResult">
-          {filteredData.slice(0, 15).map((value, key) => {
-            return (
-              <a className="dataItem" href={value.link} target="_blank">
-                <p>{value.title} </p>
-              </a>
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
+  return(
+   
+      <input type='search' className='search' placeholder={placeholder} onChange = {handleChange} />
+      
+  )
 }
 
 export default SearchBar;
+
+
+
+
+
+
